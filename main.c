@@ -16,15 +16,44 @@ typedef struct TEmployee
 TEMPLOYEE        * newEmployee  ( const char      * name,
                                   TEMPLOYEE       * next )
 {
-    /* todo */
+    /* pridá nového pred toho next */
+    TEMPLOYEE *novy;
+
+    novy =  malloc(sizeof(TEMPLOYEE));
+    novy->m_Next = next;
+    novy->m_Name = (char *)name;
+    novy->m_Bak = NULL;
+    return novy;
 }
+
 TEMPLOYEE        * cloneList    ( TEMPLOYEE       * src )
 {
-    /* todo */
+    /* vytvori klon zoznamu src*/
+    TEMPLOYEE *klon=NULL, *tmp=NULL, *tmpSrc;
+    tmpSrc = src; /*aby sa nedokazil src*/
+
+    while(tmpSrc->m_Next != NULL ) {
+        tmp = newEmployee(tmpSrc->m_Name, tmp);
+        if( klon == NULL ) klon=tmp;    /*zapamatam si zaciatok*/
+        tmpSrc = tmpSrc->m_Next;
+    }
+
+    tmp=klon;   /*znova na zaciatok*/
+    while(tmp->m_Next != NULL) {
+//    tmp->m_Bak = tmpSrc->m_Bak;
 }
+    return klon;
+}
+
 void               freeList     ( TEMPLOYEE       * src )
 {
-    /* todo */
+    /* odstani cely zoznam */
+    TEMPLOYEE *tmp;
+    while( src != NULL) {
+        tmp = src;
+        src = src->m_Next;
+        free(tmp);
+    }
 }
 
 #ifndef __PROGTEST__
